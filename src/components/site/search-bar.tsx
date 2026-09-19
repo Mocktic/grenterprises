@@ -22,7 +22,7 @@ export const SearchBar = ({
 }) => (
   <form action="/search" method="get" role="search" className={cn('relative w-full', className)}>
     <label htmlFor={id} className="sr-only">
-      Search by part number, product, or equipment model
+      Search products, brands and part numbers
     </label>
     <Search
       aria-hidden
@@ -38,7 +38,7 @@ export const SearchBar = ({
       defaultValue={defaultValue}
       autoFocus={autoFocus}
       placeholder={
-        size === 'lg' ? 'Part number, product, or equipment model…' : 'Search part number…'
+        size === 'lg' ? 'Search products, brands, part numbers…' : 'Search products, brands…'
       }
       className={cn(
         'w-full rounded-control border border-line-strong bg-surface font-mono text-ink',

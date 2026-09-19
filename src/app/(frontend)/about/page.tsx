@@ -6,7 +6,7 @@ import { JsonLd } from '@/components/ui/json-ld'
 import { localBusinessJsonLd } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: 'About us',
+  title: 'About Us',
   description:
     'GR Enterprises has supplied medical equipment and accessories to hospitals across India since 1994. Registered government contractor, based in Mohali.',
   alternates: { canonical: '/about' },
@@ -19,7 +19,7 @@ export default async function AboutPage() {
   return (
     <div className="px-4 py-6 lg:px-10 lg:py-8">
       <JsonLd data={localBusinessJsonLd(settings)} />
-      <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'About us', href: '/about' }]} />
+      <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'About Us', href: '/about' }]} />
 
       <article className="mt-4 max-w-2xl">
         <h1 className="text-h1">About GR Enterprises</h1>
@@ -43,7 +43,7 @@ export default async function AboutPage() {
           </p>
           <p>
             We hold stock for the lines we sell most, and source the rest. If a part is not listed
-            on this site, it is worth asking — the catalogue here is smaller than what we can
+            on this site, it is worth asking - the catalogue here is smaller than what we can
             supply.
           </p>
         </div>

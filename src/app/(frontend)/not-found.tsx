@@ -19,10 +19,10 @@ export default function NotFound() {
 
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button asChild>
-            <Link href="/products">All products</Link>
+            <Link href="/products">All Products</Link>
           </Button>
           <Button asChild variant="secondary">
-            <Link href="/contact">Contact us</Link>
+            <Link href="/contact">Contact Us</Link>
           </Button>
         </div>
       </div>

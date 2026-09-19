@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { CategoryNode } from '@/lib/catalogue'
+import { SiteLinks } from './site-links'
 
 export const CategoryList = ({
   categories,
@@ -18,41 +18,15 @@ export const CategoryList = ({
 
   if (categories.length === 0) {
     return (
-      <nav aria-label="Product categories">
-        <Link
-          href="/products"
-          onClick={onNavigate}
-          className="flex items-center justify-between rounded-control px-3 py-2 text-sm font-medium text-ink transition-colors hover:bg-surface-muted"
-        >
-          All products
-          <ArrowRight aria-hidden className="size-3.5 text-ink-faint" />
-        </Link>
-        <p className="px-3 pt-3 text-sm text-ink-faint">
-          No categories yet. Add them in the admin panel.
-        </p>
-      </nav>
+      <p className="px-3 py-2 text-sm text-ink-faint">
+        No categories yet. Add them in the admin panel.
+      </p>
     )
   }
 
   return (
     <nav aria-label="Product categories">
       <ul className="space-y-0.5">
-        <li className="mb-1 border-b border-line pb-1">
-          <Link
-            href="/products"
-            onClick={onNavigate}
-            aria-current={pathname === '/products' ? 'page' : undefined}
-            className={cn(
-              'flex items-center justify-between rounded-control px-3 py-2 text-sm font-medium transition-colors',
-              pathname === '/products'
-                ? 'bg-primary-soft text-primary-deep'
-                : 'text-ink hover:bg-surface-muted',
-            )}
-          >
-            All products
-            <ArrowRight aria-hidden className="size-3.5 text-ink-faint" />
-          </Link>
-        </li>
         {categories.map((category) => (
           <li key={category.id}>
             <Link
@@ -102,6 +76,7 @@ export const CategorySidebar = ({ categories }: { categories: CategoryNode[] }) 
     <div className="sticky top-[5.5rem] max-h-[calc(100vh-6rem)] overflow-y-auto p-3">
       <p className="eyebrow px-3 pb-2 pt-1">Catalogue</p>
       <CategoryList categories={categories} />
+      <SiteLinks />
     </div>
   </aside>
 )

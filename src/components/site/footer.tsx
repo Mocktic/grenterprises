@@ -34,7 +34,7 @@ export const Footer = async () => {
             ))}
             <li>
               <Link href="/products" className="font-medium text-primary hover:underline">
-                All products
+                All Products
               </Link>
             </li>
           </ul>
@@ -45,7 +45,7 @@ export const Footer = async () => {
           <ul className="mt-3 space-y-2 text-sm">
             <li>
               <Link href="/about" className="text-ink-muted transition-colors hover:text-primary">
-                About us
+                About Us
               </Link>
             </li>
             <li>

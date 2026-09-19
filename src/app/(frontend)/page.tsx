@@ -25,7 +25,7 @@ export default async function HomePage() {
   const headline = settings.heroHeadline || 'From a single oximeter to a whole ward.'
   const subtext =
     settings.heroSubtext ||
-    'Complete medical equipment and the parts that keep it running — ECG machines, patient monitors, SpO2 meters, laryngoscopes, airway devices, sensors and batteries. One piece or a full department.'
+    'Complete medical equipment and the parts that keep it running - ECG machines, patient monitors, SpO2 meters, laryngoscopes, airway devices, sensors and batteries. One piece or a full department.'
 
   return (
     <>

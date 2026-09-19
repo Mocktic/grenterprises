@@ -5,7 +5,7 @@ import { Pagination } from '@/components/site/pagination'
 import { listProducts } from '@/lib/catalogue'
 
 export const metadata: Metadata = {
-  title: 'All products',
+  title: 'All Products',
   description:
     'The full GR Enterprises catalogue — medical equipment, sensors, cables, consumables and compatible spares for hospitals across India.',
   alternates: { canonical: '/products' },
@@ -22,10 +22,10 @@ export default async function ProductsPage({
 
   return (
     <div className="px-4 py-6 lg:px-10 lg:py-8">
-      <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'All products', href: '/products' }]} />
+      <Breadcrumbs trail={[{ name: 'Home', href: '/' }, { name: 'All Products', href: '/products' }]} />
 
       <header className="mt-4 mb-8">
-        <h1 className="text-h1">All products</h1>
+        <h1 className="text-h1">All Products</h1>
         <p className="mt-2 text-ink-muted">
           {result.totalDocs} {result.totalDocs === 1 ? 'product' : 'products'} in the catalogue.
           Every one is available to quote.

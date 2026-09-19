@@ -1,18 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Menu, X } from 'lucide-react'
 import { CategoryList } from './category-sidebar'
+import { SiteLinks } from './site-links'
 import type { CategoryNode } from '@/lib/catalogue'
 import type { SiteDetails } from '@/lib/site'
-
-const staticLinks = [
-  { href: '/products', label: 'All products' },
-  { href: '/about', label: 'About us' },
-  { href: '/contact', label: 'Contact' },
-]
 
 export const MobileNav = ({
   categories,
@@ -48,21 +42,7 @@ export const MobileNav = ({
           <div className="flex-1 overflow-y-auto p-3">
             <CategoryList categories={categories} onNavigate={() => setOpen(false)} />
 
-            <div className="mt-4 border-t border-line pt-3">
-              <ul className="space-y-0.5">
-                {staticLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setOpen(false)}
-                      className="block rounded-control px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-muted hover:text-ink"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <SiteLinks onNavigate={() => setOpen(false)} />
           </div>
 
           <div className="border-t border-line bg-surface-muted px-4 py-3 text-sm">
