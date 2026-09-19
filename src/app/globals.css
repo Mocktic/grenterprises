@@ -245,3 +245,44 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* Self-scrolling credentials bar.
+   The track holds two copies of the list and travels exactly half its width,
+   so the loop has no visible seam. */
+@keyframes marquee-drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-viewport {
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-drift 26s linear infinite;
+}
+
+/* A mechanism to stop it, for pointer, keyboard and touch alike. */
+.marquee-track:hover,
+.marquee-track:focus-within,
+.marquee-viewport:active .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+
+  /* Without motion it still needs to be reachable, so hand back the scroll. */
+  .marquee-viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .marquee-viewport::-webkit-scrollbar {
+    display: none;
+  }
+}

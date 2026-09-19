@@ -186,7 +186,7 @@ export interface Product {
     [k: string]: unknown;
   } | null;
   /**
-   * First image is used on cards and in search results.
+   * Square images work best — 1200×1200, under 1 MB. Any shape is safe: pictures are fitted inside the frame rather than cropped, so nothing gets cut off. Photograph on a plain white background if you can. The first image is the one shown on cards and in search results.
    */
   images?: (number | Media)[] | null;
   /**
@@ -260,6 +260,9 @@ export interface Category {
    * One or two lines shown at the top of the category page.
    */
   description?: string | null;
+  /**
+   * Landscape, around 1200×800. Shown on the home page tile for this category.
+   */
   image?: (number | null) | Media;
   seo?: {
     /**
@@ -275,6 +278,8 @@ export interface Category {
   createdAt: string;
 }
 /**
+ * Product photos, category images and logos. Square 1200×1200 suits products; landscape 1600×1000 suits the home banner. Keep files under 1 MB — JPG for photographs, PNG when you need a transparent background.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -284,6 +289,12 @@ export interface Media {
    * Describe the image for screen readers and search engines. E.g. "Masimo RAD 97 SpO2 sensor, adult soft rubber".
    */
   alt: string;
+  /**
+   * Who took the photo and under what licence. Required for anything sourced from Wikimedia Commons or a stock library — leave blank for your own photographs.
+   */
+  credit?: string | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -335,6 +346,9 @@ export interface Brand {
    * Web address for this page. Leave blank and it fills in from the name.
    */
   slug?: string | null;
+  /**
+   * Wide logo, around 400×200. A PNG with a transparent background looks best against the page.
+   */
   logo?: (number | null) | Media;
   description?: string | null;
   seo?: {
@@ -751,6 +765,9 @@ export interface BrandsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  credit?: T;
+  prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -997,6 +1014,10 @@ export interface SiteSetting {
   gstin?: string | null;
   msmeNumber?: string | null;
   /**
+   * Shown in the bar under the header, alongside GSTIN and MSME.
+   */
+  drugLicenceNumber?: string | null;
+  /**
    * Short phrases, e.g. "Govt. Contractor", "Importer & Exporter".
    */
   credentials?:
@@ -1006,7 +1027,7 @@ export interface SiteSetting {
       }[]
     | null;
   /**
-   * A wide photograph — your showroom, a shelf of stock, or equipment in use. Landscape works best, around 1600×1000 pixels.
+   * A wide photograph — your showroom, a shelf of stock, or equipment in use. Landscape, around 1600×1000, under 1 MB. This one IS cropped to fit, so keep the subject near the middle.
    */
   heroImage?: (number | null) | Media;
   heroHeadline?: string | null;
@@ -1039,6 +1060,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   establishedYear?: T;
   gstin?: T;
   msmeNumber?: T;
+  drugLicenceNumber?: T;
   credentials?:
     | T
     | {

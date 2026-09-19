@@ -51,3 +51,6 @@ media/
 
 # Reference catalogue (large binary, kept out of git — shared directly instead)
 *.pdf
+
+# Timestamped backups produced by scripts/migrate-media.ts
+media-backup-*/

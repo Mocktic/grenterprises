@@ -39,6 +39,7 @@ import { ImportSaveButton as ImportSaveButton_cdf7e044479f899a31f804427d568b36 }
 import { DashboardStats as DashboardStats_7b57228c6f06a06348e4c53967f631ca } from '@/components/admin/DashboardStats'
 import { NavDashboardLink as NavDashboardLink_1d332ed61b7eb33eb8d4125006ee799e } from '@/components/admin/NavDashboardLink'
 import { ImportExportProvider as ImportExportProvider_cdf7e044479f899a31f804427d568b36 } from '@payloadcms/plugin-import-export/rsc'
+import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -84,5 +85,6 @@ export const importMap = {
   "@/components/admin/DashboardStats#DashboardStats": DashboardStats_7b57228c6f06a06348e4c53967f631ca,
   "@/components/admin/NavDashboardLink#NavDashboardLink": NavDashboardLink_1d332ed61b7eb33eb8d4125006ee799e,
   "@payloadcms/plugin-import-export/rsc#ImportExportProvider": ImportExportProvider_cdf7e044479f899a31f804427d568b36,
+  "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

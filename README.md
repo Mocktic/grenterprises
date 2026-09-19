@@ -57,6 +57,8 @@ is typed from that file.
 | `RESEND_API_KEY` | no | Blank means leads still save; the notification is logged to the console instead |
 | `LEAD_NOTIFY_TO` | no | Where quote requests are emailed |
 | `TURNSTILE_SECRET_KEY` / `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | no | Blank disables the bot check, which is what you want locally |
+| `STORAGE_DRIVER` | no | `vercel-blob`, `r2` or `local`. Blank auto-detects |
+| `BLOB_READ_WRITE_TOKEN` | no | Set automatically when a Blob store is attached in Vercel |
 | `R2_*` | no | Blank stores uploads on local disk |
 
 Every optional variable degrades safely, so the site runs with only a database.
@@ -104,6 +106,60 @@ field and teach scrapers to skip it.
 **Cache invalidation is path-based.** Payload `afterChange` hooks call
 `revalidatePath('/', 'layout')` so an edit appears on the site immediately. Blunt,
 but catalogue edits are infrequent and a stale sidebar is worse than a cold cache.
+
+## Where uploads are stored
+
+Both adapters are wired up, so the choice is an environment variable rather than
+a code change:
+
+| `STORAGE_DRIVER` | Uses |
+| --- | --- |
+| `vercel-blob` | Vercel Blob (needs `BLOB_READ_WRITE_TOKEN`) |
+| `r2` | Cloudflare R2 (needs the four `R2_*` vars) |
+| `local` | Local disk under `media/` |
+| *(blank)* | Blob if its token is set, else R2, else local |
+
+**Switching drivers does not move existing files.** Anything already uploaded
+stays in the old store and has to be re-uploaded, so change driver before the
+catalogue is populated rather than after.
+
+### Switching storage driver
+
+Changing `STORAGE_DRIVER` only changes where *new* files go. Existing rows keep
+their filenames, the new adapter looks for them in a store that does not have
+them, and every image 404s. Run `src/scripts/migrate-media.ts` after switching:
+it backs up every original to a timestamped folder and verifies the copy before
+uploading anything, so a failed upload cannot destroy the source.
+
+`src/scripts/restore-media.ts` re-uploads originals from those backups if a
+migration goes wrong.
+
+### Vercel Blob needs a PUBLIC store
+
+Payload's Blob adapter only supports `access: 'public'` — the option is typed as
+the literal `'public'`, and a private store rejects every upload with
+*"Cannot use public access on a private store"*. Create the Blob store as
+**public** in the Vercel dashboard; store access cannot be changed afterwards.
+
+Public is also the right choice here: product photos are meant to be fetched
+directly by browsers and indexed by Google, and public delivery is roughly 3x
+cheaper per GB than proxying private blobs through a Function.
+
+### Vercel Blob on the Hobby plan
+
+Included per month: **1 GB storage, 10 GB data transfer, 10,000 simple
+operations, 2,000 advanced operations.**
+
+Two things to watch:
+
+- **Advanced operations are the tight one.** Every `put()` counts, and Payload
+  writes four files per upload — the original plus the thumbnail, card and hero
+  sizes. That is 2,000 ÷ 4 = **500 product uploads a month**, and browsing the
+  Blob dashboard consumes them too. Adding products steadily is fine; bulk
+  importing several hundred at once is not.
+- **Exceeding a limit disables Blob for up to 30 days.** On Hobby you cannot pay
+  your way out of it — images simply stop loading until the window resets. That
+  is the argument for moving to R2 before the catalogue gets large.
 
 ## The admin panel
 

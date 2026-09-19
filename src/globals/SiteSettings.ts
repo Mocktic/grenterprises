@@ -76,6 +76,14 @@ export const SiteSettings: GlobalConfig = {
               ],
             },
             {
+              name: 'drugLicenceNumber',
+              type: 'text',
+              label: 'Drug Licence Number',
+              admin: {
+                description: 'Shown in the bar under the header, alongside GSTIN and MSME.',
+              },
+            },
+            {
               name: 'credentials',
               type: 'array',
               labels: { singular: 'Credential', plural: 'Credentials' },
@@ -94,7 +102,7 @@ export const SiteSettings: GlobalConfig = {
               relationTo: 'media',
               admin: {
                 description:
-                  'A wide photograph — your showroom, a shelf of stock, or equipment in use. Landscape works best, around 1600×1000 pixels.',
+                  'A wide photograph — your showroom, a shelf of stock, or equipment in use. Landscape, around 1600×1000, under 1 MB. This one IS cropped to fit, so keep the subject near the middle.',
               },
             },
             {

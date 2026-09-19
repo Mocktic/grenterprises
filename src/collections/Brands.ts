@@ -30,7 +30,15 @@ export const Brands: CollectionConfig = {
   fields: [
     { name: 'name', type: 'text', required: true },
     slugField('name'),
-    { name: 'logo', type: 'upload', relationTo: 'media' },
+    {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Wide logo, around 400×200. A PNG with a transparent background looks best against the page.',
+      },
+    },
     { name: 'description', type: 'textarea' },
     seoGroup,
   ],

@@ -94,7 +94,10 @@ export const Products: CollectionConfig = {
               type: 'upload',
               relationTo: 'media',
               hasMany: true,
-              admin: { description: 'First image is used on cards and in search results.' },
+              admin: {
+                description:
+                  'Square images work best — 1200×1200, under 1 MB. Any shape is safe: pictures are fitted inside the frame rather than cropped, so nothing gets cut off. Photograph on a plain white background if you can. The first image is the one shown on cards and in search results.',
+              },
             },
           ],
         },

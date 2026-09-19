@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     template: '%s · GR Enterprises',
   },
   description:
-    'Supplier of medical equipment, sensors, cables and compatible accessories to hospitals across India since 1994. Based in Mohali, serving Chandigarh, Mohali and Panchkula.',
+    'Medical equipment, spares and consumables supplied to hospitals, clinics and homes across India since 1994 — ECG machines, patient monitors, SpO2 meters, sensors, cables and batteries. Based in Mohali, serving Chandigarh, Mohali and Panchkula.',
   openGraph: {
     type: 'website',
     siteName: 'GR Enterprises',

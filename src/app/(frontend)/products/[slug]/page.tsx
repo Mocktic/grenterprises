@@ -10,7 +10,8 @@ import { SpecPlate } from '@/components/ui/spec-plate'
 import { AvailabilityBadge, Badge } from '@/components/ui/badge'
 import { getProductBySlug, listProducts } from '@/lib/catalogue'
 import { getPayloadClient } from '@/lib/payload'
-import { getSiteSettings, telLink } from '@/lib/site'
+import { getSiteSettings, productEnquiryMessage, whatsappLink } from '@/lib/site'
+import { WhatsAppIcon } from '@/components/ui/whatsapp-icon'
 import { productImages } from '@/lib/media'
 import { hasVisiblePrice, priceLabel } from '@/lib/price'
 import { JsonLd } from '@/components/ui/json-ld'
@@ -133,12 +134,17 @@ export default async function ProductPage({ params }: Props) {
                 size="lg"
                 label="Get a quote"
               />
-              <a
-                href={telLink(settings.phone)}
-                className="inline-flex h-12 items-center rounded-control border border-line-strong bg-surface px-5 font-mono text-sm text-ink transition-colors hover:border-ink-faint"
-              >
-                {settings.phone}
-              </a>
+              {settings.whatsappNumber && (
+                <a
+                  href={whatsappLink(settings.whatsappNumber, productEnquiryMessage(product))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex h-12 items-center gap-2 rounded-control border border-[#25D366] bg-surface px-5 text-sm font-medium text-[#128C4A] transition-colors hover:bg-[#25D366]/10"
+                >
+                  <WhatsAppIcon className="size-4 shrink-0" />
+                  Ask on WhatsApp
+                </a>
+              )}
             </div>
             <p className="mt-3 text-xs text-ink-faint">
               We usually reply with a price within one working day.

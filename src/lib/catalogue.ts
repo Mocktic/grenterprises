@@ -117,13 +117,24 @@ export const searchProducts = async (query: string, limit = 40) => {
 
   const payload = await getPayloadClient()
 
+  /**
+   * Brands are matched by resolving their ids first rather than querying
+   * `brand.name` through the relationship. The join-based form is fussier
+   * across database adapters, and this is two cheap queries against a table
+   * with a handful of rows.
+   */
+  const { docs: brands } = await payload.find({
+    collection: 'brands',
+    where: { name: { like: q } },
+    limit: 25,
+    depth: 0,
+  })
+  const brandIds = brands.map((b) => b.id)
+
   const { docs: exact } = await payload.find({
     collection: 'products',
     where: {
-      or: [
-        { partNumber: { equals: q } },
-        { 'variants.partNumber': { equals: q } },
-      ],
+      or: [{ partNumber: { equals: q } }, { 'variants.partNumber': { equals: q } }],
     },
     limit: 10,
     depth: 1,
@@ -143,6 +154,7 @@ export const searchProducts = async (query: string, limit = 40) => {
             { 'compatibleWith.model': { like: q } },
             { 'compatibleWith.manufacturer': { like: q } },
             { 'variants.partNumber': { like: q } },
+            ...(brandIds.length ? [{ brand: { in: brandIds } }] : []),
           ],
         },
       ],

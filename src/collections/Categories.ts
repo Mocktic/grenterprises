@@ -51,7 +51,15 @@ export const Categories: CollectionConfig = {
       type: 'textarea',
       admin: { description: 'One or two lines shown at the top of the category page.' },
     },
-    { name: 'image', type: 'upload', relationTo: 'media' },
+    {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Landscape, around 1200×800. Shown on the home page tile for this category.',
+      },
+    },
     seoGroup,
   ],
 }

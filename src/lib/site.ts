@@ -14,6 +14,7 @@ const fallback = {
   establishedYear: 1994,
   gstin: '03EDKPS3373H1ZB',
   msmeNumber: 'PB-20-0092585',
+  drugLicenceNumber: 'MD42-PB/SAS/2025/000024',
   openingHours: 'Mon–Sat, 9:30am–7pm',
   priceDisclaimer: 'All prices exclusive of GST. Subject to change without notice.',
 } satisfies Partial<SiteSetting>
@@ -80,4 +81,27 @@ export const formattedAddress = (settings: SiteDetails): string => {
     .filter((part): part is string => Boolean(part && String(part).trim()))
     .filter((part) => !base.toLowerCase().includes(String(part).trim().toLowerCase()))
   return [base, ...missing].filter(Boolean).join(', ')
+}
+
+/**
+ * Pre-filled WhatsApp text for a specific product.
+ *
+ * The part number and a link are included because the owner answers these on a
+ * phone: without them the first reply is always "which one?", and a part number
+ * retyped from memory is a part number typed wrong.
+ */
+export const productEnquiryMessage = (product: {
+  name: string
+  slug?: string | null
+  partNumber?: string | null
+}): string => {
+  const base = process.env.NEXT_PUBLIC_SERVER_URL ?? ''
+  return [
+    'Hello GR Enterprises, I would like a quote for:',
+    product.name,
+    product.partNumber ? `Part number: ${product.partNumber}` : null,
+    product.slug && base ? `${base}/products/${product.slug}` : null,
+  ]
+    .filter(Boolean)
+    .join('\n')
 }
