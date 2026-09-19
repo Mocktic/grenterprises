@@ -1,0 +1,247 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   GR Enterprises design tokens
+
+   The palette is drawn from the company logo. The register is deliberately
+   technical rather than "healthcare marketing": this is a parts catalogue read
+   by biomedical engineers and purchase officers, so it borrows the visual
+   language of equipment documentation — rating plates, spec tables, part codes.
+   --------------------------------------------------------------------------- */
+@theme {
+  /* Ink */
+  --color-ink: #0b1b33;
+  --color-ink-muted: #5a6b85;
+  --color-ink-faint: #8595ab;
+
+  /* Brand blues, from the logo mark */
+  --color-primary: #2d5bb9;
+  --color-primary-deep: #1e3a6e;
+  --color-primary-hover: #244c9e;
+  --color-primary-soft: #eef3fc;
+  --color-accent: #5b9bd5;
+
+  /* Sampled from the glyph cores of logo.jpg. The wordmark and its tagline are
+     both blue — the tagline only reads as warm at thumbnail size, which is a
+     JPEG artefact rather than the actual ink. */
+  --color-logo: #15528b;
+  --color-logo-muted: #295b85;
+
+  /* Warm accent for credential marks. Not from the logo. */
+  --color-warm: #8b3a2f;
+  --color-warm-soft: #fbf1ef;
+
+  /* Surfaces and lines */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f6f8fb;
+  --color-surface-sunken: #eef1f6;
+  --color-line: #e2e8f0;
+  --color-line-strong: #cbd5e1;
+
+  /* Status */
+  --color-success: #1a7f5a;
+  --color-success-soft: #eaf6f1;
+  --color-caution: #9a6700;
+  --color-caution-soft: #fdf6e3;
+
+  /* Type */
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-plex-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, 'SF Mono', monospace;
+
+  /* Fluid scale — clamped so nothing breaks at 320px or on ultrawide */
+  --text-display: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  --text-h1: clamp(1.75rem, 1.45rem + 1.5vw, 2.25rem);
+  --text-h2: clamp(1.375rem, 1.25rem + 0.6vw, 1.5rem);
+
+  /* Shape */
+  --radius-card: 8px;
+  --radius-control: 6px;
+
+  /* Layout */
+  --spacing-sidebar: 17rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    /* Never below 16px: smaller triggers input zoom on iOS, and this audience
+       skews older than a consumer store's. */
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  /* Keyboard focus must always be visible — purchase officers tab through forms. */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* The signature element: a part number set like the rating plate riveted to
+     the equipment itself. Monospace disambiguates 0/O and 1/l, which matters
+     when the number is being transcribed into a purchase order. */
+  .spec-plate {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 4px;
+    background: var(--color-surface-muted);
+    padding: 0.25rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.01em;
+    color: var(--color-ink);
+  }
+
+  .spec-plate::before {
+    content: 'PART';
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--color-ink-faint);
+    border-right: 1px solid var(--color-line-strong);
+    padding-right: 0.5rem;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Small uppercase section label. Used where a heading would be too loud. */
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+}
+
+/* Dialog motion. Kept to opacity and a slight scale, 150ms — enough to show
+   where the panel came from, not enough to make a repeat visitor wait. */
+@keyframes dialog-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dialog-panel-in {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.97); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes dialog-sheet-in {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dialog-overlay[data-state='open'] {
+  animation: dialog-overlay-in 150ms ease-out;
+}
+
+.dialog-panel[data-state='open'] {
+  animation: dialog-sheet-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 40rem) {
+  .dialog-panel[data-state='open'] {
+    animation: dialog-panel-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* Skip link — visible only once focused. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  border-radius: var(--radius-control);
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: transform 150ms ease-out;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Rich text from the admin editor. Scoped so editor output cannot leak styles
+   into the rest of the page. */
+.prose-gr :is(p, ul, ol) {
+  margin-block: 0.75rem;
+}
+
+.prose-gr :is(h2, h3) {
+  color: var(--color-ink);
+  margin-block: 1.5rem 0.5rem;
+}
+
+.prose-gr h2 { font-size: 1.25rem; }
+.prose-gr h3 { font-size: 1.0625rem; }
+
+.prose-gr :is(ul, ol) {
+  padding-left: 1.25rem;
+}
+
+.prose-gr ul { list-style: disc; }
+.prose-gr ol { list-style: decimal; }
+.prose-gr li { margin-block: 0.25rem; }
+
+.prose-gr a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose-gr strong { color: var(--color-ink); font-weight: 600; }
+
+/* Horizontal scrollers keep their scrollbar off-screen: the arrows carry the
+   affordance on desktop and the row is swipeable on touch. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

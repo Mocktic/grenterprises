@@ -1,0 +1,293 @@
+/**
+ * Admin panel adjustments.
+ *
+ * Scoped deliberately narrowly. This styles a third-party admin whose markup we
+ * do not control, so every selector here is either one of our own `gr-` classes
+ * or an attribute selector stable enough to survive a Payload upgrade. Payload's
+ * own theme variables are used throughout so light and dark both work.
+ */
+
+/* ---------------------------------------------------------------------------
+   List views: make "Create new" read as the primary action
+   The control is a link to <collection>/create, which is a far more stable
+   hook than whichever button style Payload happens to render it with.
+   --------------------------------------------------------------------------- */
+.list-header {
+  &__content {
+    align-items: center;
+    gap: calc(var(--base) * 0.75);
+  }
+
+  &__title-and-actions,
+  &__actions {
+    margin-bottom: 0;
+  }
+
+  &__actions a[href$='/create'] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    background: var(--theme-elevation-800);
+    color: var(--theme-elevation-0);
+    border: 1px solid transparent;
+    border-radius: var(--style-radius-m);
+    padding: 0.55em 1.1em;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background 150ms ease;
+
+    .pill {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    &:hover {
+      background: var(--theme-elevation-1000);
+      color: var(--theme-elevation-0);
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Navigation: a way back to the dashboard
+   --------------------------------------------------------------------------- */
+.gr-nav-home {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  margin-bottom: calc(var(--base) * 0.5);
+  padding: 0.5em 0.75em;
+  border-radius: var(--style-radius-s);
+  color: var(--theme-elevation-800);
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--theme-elevation-100);
+    color: var(--theme-elevation-1000);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Cancel, beside Save
+   --------------------------------------------------------------------------- */
+.gr-cancel {
+  background: transparent;
+  border: 1px solid var(--theme-elevation-250);
+  border-radius: var(--style-radius-m);
+  color: var(--theme-elevation-800);
+  cursor: pointer;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.55em 1.1em;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+
+  &:hover {
+    background: var(--theme-elevation-100);
+    border-color: var(--theme-elevation-400);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Dashboard summary
+   --------------------------------------------------------------------------- */
+.gr-stats {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--base) * 0.75);
+  margin-bottom: calc(var(--base) * 1.25);
+
+  &__headline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--base);
+    padding: calc(var(--base) * 0.9);
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: var(--style-radius-m);
+    background: var(--theme-elevation-50);
+  }
+
+  &__eyebrow {
+    margin: 0;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--theme-elevation-500);
+  }
+
+  &__big {
+    margin: 0.25rem 0 0;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--theme-elevation-1000);
+
+    span {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--theme-elevation-700);
+      margin-left: 0.4rem;
+    }
+  }
+
+  &__sub {
+    margin: 0.35rem 0 0;
+    color: var(--theme-elevation-600);
+    font-size: 0.875rem;
+  }
+
+  &__cta {
+    background: var(--theme-elevation-800);
+    color: var(--theme-elevation-0);
+    border-radius: var(--style-radius-m);
+    padding: 0.6em 1.1em;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--theme-elevation-1000);
+      color: var(--theme-elevation-0);
+    }
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+    gap: calc(var(--base) * 0.5);
+  }
+
+  &__split {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: calc(var(--base) * 0.5);
+
+    @media (max-width: 1024px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  &__panel {
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: var(--style-radius-m);
+    padding: calc(var(--base) * 0.75);
+  }
+
+  &__panel-title {
+    margin: 0 0 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--theme-elevation-500);
+  }
+
+  &__empty {
+    margin: 0;
+    color: var(--theme-elevation-500);
+    font-size: 0.875rem;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--theme-elevation-100);
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    a {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      min-width: 0;
+      text-decoration: none;
+    }
+  }
+
+  &__name {
+    color: var(--theme-elevation-1000);
+    font-weight: 600;
+  }
+
+  &__meta {
+    color: var(--theme-elevation-500);
+    font-size: 0.8125rem;
+  }
+
+  &__count {
+    color: var(--theme-elevation-800);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.gr-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: calc(var(--base) * 0.6);
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: var(--style-radius-m);
+
+  &__value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--theme-elevation-1000);
+  }
+
+  &__label {
+    font-size: 0.8125rem;
+    color: var(--theme-elevation-600);
+  }
+
+  &--urgent &__value {
+    color: var(--theme-error-500);
+  }
+
+  &--good &__value {
+    color: var(--theme-success-500);
+  }
+}
+
+.gr-tag {
+  border-radius: 999px;
+  padding: 0.15em 0.6em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+  background: var(--theme-elevation-100);
+  color: var(--theme-elevation-700);
+
+  &--new {
+    background: var(--theme-error-100);
+    color: var(--theme-error-600);
+  }
+
+  &--won {
+    background: var(--theme-success-100);
+    color: var(--theme-success-600);
+  }
+}
