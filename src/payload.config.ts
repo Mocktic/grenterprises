@@ -82,7 +82,14 @@ const storagePlugin =
     ? s3Storage({
         enabled: true,
         alwaysInsertFields: true,
-        collections: { media: true },
+        /**
+         * Serve straight from the storage CDN rather than proxying every image
+         * through Payload. These are public product photos on a catalogue that
+         * wants to be indexed — routing them through a function would add a hop,
+         * bill a function invocation per image, and give Google a slower URL for
+         * no access-control benefit.
+         */
+        collections: { media: { disablePayloadAccessControl: true } },
         bucket: process.env.R2_BUCKET as string,
         config: {
           endpoint: process.env.R2_ENDPOINT,
@@ -96,7 +103,14 @@ const storagePlugin =
     : vercelBlobStorage({
         enabled: storageDriver === 'vercel-blob',
         alwaysInsertFields: true,
-        collections: { media: true },
+        /**
+         * Serve straight from the storage CDN rather than proxying every image
+         * through Payload. These are public product photos on a catalogue that
+         * wants to be indexed — routing them through a function would add a hop,
+         * bill a function invocation per image, and give Google a slower URL for
+         * no access-control benefit.
+         */
+        collections: { media: { disablePayloadAccessControl: true } },
         token: process.env.BLOB_READ_WRITE_TOKEN,
       })
 

@@ -293,7 +293,6 @@ export interface Media {
    * Who took the photo and under what licence. Required for anything sourced from Wikimedia Commons or a stock library — leave blank for your own photographs.
    */
   credit?: string | null;
-  prefix?: string | null;
   _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -766,7 +765,6 @@ export interface BrandsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   credit?: T;
-  prefix?: T;
   _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;

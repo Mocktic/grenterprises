@@ -54,3 +54,9 @@ media/
 
 # Timestamped backups produced by scripts/migrate-media.ts
 media-backup-*/
+
+# Catalogue snapshots from scripts/backup-catalogue.ts
+catalogue-backup-*/
+
+# Vercel store notes (not secret, but not source either)
+vercel.txt
